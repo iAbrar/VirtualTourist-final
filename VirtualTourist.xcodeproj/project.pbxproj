@@ -96,7 +96,6 @@
 		883BA50D24EC47570041A013 /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
-				884CFD7C24ED839C00A4797C /* Extentions */,
 				884CFD7B24ED838B00A4797C /* Models */,
 				884CFD7A24ED837D00A4797C /* Network */,
 				884CFD7924ED836400A4797C /* Controllers */,
@@ -144,13 +143,6 @@
 				88B6B83824FD3956000E2F99 /* DataController.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		884CFD7C24ED839C00A4797C /* Extentions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extentions;
 			sourceTree = "<group>";
 		};
 		A5D144B2206B547704A2283E /* Frameworks */ = {
