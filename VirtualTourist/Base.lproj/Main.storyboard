@@ -109,15 +109,14 @@
                                 <rect key="frame" x="0.0" y="38" width="375" height="181"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="97" translatesAutoresizingMaskIntoConstraints="NO" id="UHG-ZP-vGa">
-                                <rect key="frame" x="0.0" y="597" width="457" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="UHG-ZP-vGa">
+                                <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ7-jn-K9r">
-                                        <rect key="frame" x="0.0" y="0.0" width="180" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="170" height="70"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="61v-dp-6u4"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="Tem-G8-WFI"/>
                                             <constraint firstAttribute="height" constant="70" id="eIm-L7-bXI"/>
                                         </constraints>
                                         <state key="normal" title="New Collection">
@@ -125,21 +124,29 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3BK-02-8aw">
-                                        <rect key="frame" x="277" y="0.0" width="180" height="70"/>
+                                        <rect key="frame" x="205" y="0.0" width="170" height="70"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="180" id="C0H-Ec-R28"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="Jss-BD-j54"/>
                                             <constraint firstAttribute="height" constant="70" id="UWH-Jx-rCl"/>
                                         </constraints>
                                         <state key="normal" title="Delete Images">
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteImagesTapped:" destination="hOJ-3W-npu" eventType="touchUpInside" id="mFf-0P-QlH"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="trailing" secondItem="7S4-PN-iXf" secondAttribute="trailing" id="ZcO-gL-Ig3"/>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="leading" secondItem="7S4-PN-iXf" secondAttribute="leading" id="d7G-r3-RId"/>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="bottom" secondItem="7S4-PN-iXf" secondAttribute="bottom" id="hJE-2p-kcE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="7S4-PN-iXf"/>
                     </view>
                     <navigationItem key="navigationItem" id="JUD-dF-9tN"/>

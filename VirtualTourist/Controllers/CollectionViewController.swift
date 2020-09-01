@@ -16,7 +16,7 @@ private let reuseIdentifier = "customCell"
 
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MKMapViewDelegate {
     
-//    var photos: [Photo] = []
+
     var pin : Pin!
     var dataController: DataController!
     var fetchedResultsController:NSFetchedResultsController<Photo>!
@@ -113,6 +113,20 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         loadImages(pin!.longitude, pin!.latitude, page)
          collection.reloadData()
+    }
+    
+    @IBAction func deleteImagesTapped(_ sender: UIButton) {
+        if let photos = fetchedResultsController.fetchedObjects {
+            for photo in photos {
+                dataController.viewContext.delete(photo)
+                do {
+                    try dataController.viewContext.save()
+                } catch {
+                    print("error")
+                }
+            }
+        }
+        collection.reloadData()
     }
     
     fileprivate func loadImages(_ lon: Double, _ lat: Double, _ page: Int) {
