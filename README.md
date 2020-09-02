@@ -13,17 +13,29 @@ Users will then be able to download pictures for the location and persist both t
 
 ## Features
 
-- [x] Feature 1
-- [x] Feature 2
-- [x] Feature 3
-- [x] Feature 4
-- [x] Feature 5
+- [x] Load new collection of images
+- [x] Show images that downloaded without internet 
+- [x] Delete all images in collection
+- [ ] Feature 4
+- [ ] Feature 5
 
 ## Requirements
 
 - iOS 12.1
 - Xcode 10.2
 
+## Steps to build
+1. Clone repo 
+```
+git clone https://github.com/iAbrar/VirtualTourist-final.git
+```
+2. Install dependences (**CocoaPods needed**)
+```
+pod install
+```
+
+3. Open `VirtualTourist.xcworkspace`
+4. Build app for your device or simulator
 
 ## Credits:
 - [Carthage](https://github.com/Carthage/Carthage)
