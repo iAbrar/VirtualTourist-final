@@ -75,6 +75,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-W3-fcJ">
+                                <rect key="frame" x="0.0" y="38" width="375" height="181"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lrs-SQ-ZQJ">
                                 <rect key="frame" x="0.0" y="245" width="375" height="422"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,30 +109,29 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-W3-fcJ">
-                                <rect key="frame" x="0.0" y="38" width="375" height="181"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="UHG-ZP-vGa">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="UHG-ZP-vGa">
                                 <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ7-jn-K9r">
-                                        <rect key="frame" x="0.0" y="0.0" width="170" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="70"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="Tem-G8-WFI"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="Cnp-cw-ny3"/>
                                             <constraint firstAttribute="height" constant="70" id="eIm-L7-bXI"/>
                                         </constraints>
                                         <state key="normal" title="New Collection">
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="newCollectionTapped:" destination="hOJ-3W-npu" eventType="touchUpInside" id="Uhs-Ps-gh2"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3BK-02-8aw">
-                                        <rect key="frame" x="205" y="0.0" width="170" height="70"/>
+                                        <rect key="frame" x="200" y="0.0" width="175" height="70"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="Jss-BD-j54"/>
                                             <constraint firstAttribute="height" constant="70" id="UWH-Jx-rCl"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="waZ-I6-CQd"/>
                                         </constraints>
                                         <state key="normal" title="Delete Images">
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -143,9 +146,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="trailing" secondItem="7S4-PN-iXf" secondAttribute="trailing" id="ZcO-gL-Ig3"/>
-                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="leading" secondItem="7S4-PN-iXf" secondAttribute="leading" id="d7G-r3-RId"/>
-                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="bottom" secondItem="7S4-PN-iXf" secondAttribute="bottom" id="hJE-2p-kcE"/>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="leading" secondItem="CdC-do-Nlw" secondAttribute="leading" id="5Jb-VL-H7k"/>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="trailing" secondItem="CdC-do-Nlw" secondAttribute="trailing" id="XIP-Gb-u90"/>
+                            <constraint firstItem="UHG-ZP-vGa" firstAttribute="bottom" secondItem="CdC-do-Nlw" secondAttribute="bottom" id="Xp1-ui-8u5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7S4-PN-iXf"/>
                     </view>

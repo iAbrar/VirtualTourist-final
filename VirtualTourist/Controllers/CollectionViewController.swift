@@ -40,7 +40,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         let annotation = MKPointAnnotation()
         
         annotation.coordinate = CLLocationCoordinate2D(latitude:pin.latitude, longitude: pin.longitude)
-        
+        mapView.showAnnotations([annotation],animated: true)
         mapView.addAnnotation(annotation)
         
     }
