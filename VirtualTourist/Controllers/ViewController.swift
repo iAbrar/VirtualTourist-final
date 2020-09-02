@@ -118,7 +118,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
        
         vc.dataController = dataController
-         print(annotation?.coordinate.latitude,"map pin info")
         
         navigationController?.pushViewController(vc, animated: true)
     }

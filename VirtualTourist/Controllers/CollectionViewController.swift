@@ -110,8 +110,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         } catch {
             print("error")
         }
-        print("delete")
-        
     }
     
     @IBAction func newCollectionTapped(_ sender: UIButton) {
@@ -150,7 +148,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         photo.creationDate = Date()
         photo.url = url
         photo.pin = pin
-        print("pin :", pin.longitude)
         try? dataController.viewContext.save()
     }
     
