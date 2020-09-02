@@ -45,6 +45,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "pins")
         fetchedResultsController.delegate = self
         do {
@@ -85,11 +86,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
+
         let pin = "pin"
-        
+
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: pin) as? MKPinAnnotationView
-        
+
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pin)
             pinView!.canShowCallout = true
@@ -98,23 +99,26 @@ class ViewController: UIViewController, MKMapViewDelegate {
         else {
             pinView!.annotation = annotation
         }
-        
+
         return pinView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
         mapView.deselectAnnotation(view.annotation! , animated: true)
-        let pin = Pin(context: dataController.viewContext)
-        pin.latitude = (view.annotation?.coordinate.latitude)!
-        pin.longitude = (view.annotation?.coordinate.longitude)!
-        pin.creationDate = Date()
-        
+
+        let annotation = view.annotation
+
         let vc = storyboard?.instantiateViewController(withIdentifier: "CollectionViewController") as! CollectionViewController;
-        
-        vc.pin = pin
+        for pin in fetchedResultsController.fetchedObjects!{
+            if(pin.latitude == annotation!.coordinate.latitude && pin.longitude == annotation!.coordinate.longitude){
+                vc.pin = pin
+                break
+            }
+        }
+       
         vc.dataController = dataController
-        
+         print(annotation?.coordinate.latitude,"map pin info")
         
         navigationController?.pushViewController(vc, animated: true)
     }

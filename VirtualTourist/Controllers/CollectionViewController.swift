@@ -32,10 +32,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard  let lat = pin?.latitude else { return }
+        guard  let lon = pin?.longitude else { return }
         
         collection.dataSource = self
         collection.delegate = self
         setupFetchedResultsController()
+        
+        if (fetchedResultsController.sections?[0].numberOfObjects == 0) {
+            loadImages(lon, lat, page)
+        }
         
         let annotation = MKPointAnnotation()
         
@@ -48,17 +54,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        guard  let lat = pin?.latitude else { return }
-        guard  let lon = pin?.longitude else { return }
-        
-        page = 1
+        super.viewWillAppear(animated)
+
+//        guard  let lat = pin?.latitude else { return }
+//        guard  let lon = pin?.longitude else { return }
+//
+//        page = 1
         setupFetchedResultsController()
         
-        if (fetchedResultsController.sections?[0].numberOfObjects ?? 0 == 0) {
-            loadImages(lon, lat, page)
-        }
-        collection.reloadData()
+//        if (fetchedResultsController.sections?[0].numberOfObjects ?? 0 == 0) {
+//            loadImages(lon, lat, page)
+//        }
+//        collection.reloadData()
     }
     
     
@@ -81,11 +88,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             
             
-            cell.imageView.kf.setImage(with: imageUrl, placeholder: image, options: nil, progressBlock: nil) { (imge, error, cacheType, url) in
+            cell.imageView.kf.setImage(with: imageUrl, placeholder: image, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
                 if ((error) != nil) {
-                    
+                    print("error in setting data")
                 } else {
-                    photo.data = imge?.pngData()
+                    photo.data = image?.pngData()
                     try? self.dataController.viewContext.save()
                 }
             }
@@ -108,11 +115,20 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func newCollectionTapped(_ sender: UIButton) {
-        
+        if let photos = fetchedResultsController.fetchedObjects {
+            for photo in photos {
+                dataController.viewContext.delete(photo)
+                do {
+                    try dataController.viewContext.save()
+                } catch {
+                    print("error")
+                }
+            }
+        }
         page = page+1
         
         loadImages(pin!.longitude, pin!.latitude, page)
-        collection.reloadData()
+       
     }
     
     @IBAction func deleteImagesTapped(_ sender: UIButton) {
@@ -129,6 +145,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collection.reloadData()
     }
     
+    fileprivate func addPhoto(_ url: String) {
+        let photo = Photo(context: dataController.viewContext)
+        photo.creationDate = Date()
+        photo.url = url
+        photo.pin = pin
+        print("pin :", pin.longitude)
+        try? dataController.viewContext.save()
+    }
+    
     fileprivate func loadImages(_ lon: Double, _ lat: Double, _ page: Int) {
         FlickrAPI.downloadJSON(longitude: lon, latitude: lat, page: page)
         { images, error in
@@ -138,30 +163,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.showAlert(title: "Error", message: error!)
                 return
             }
+            for image in images
+            {
+                self.addPhoto(image)
+            }
             DispatchQueue.main.async {
-                
-                for image in images
-                {
-                    let photo = Photo(context: self.dataController.viewContext)
-                    photo.creationDate = Date()
-                    photo.url = image
-                    photo.pin = self.pin
-                    try? self.dataController.viewContext.save()
-                }
                 self.collection.reloadData()
-                
             }
         }
     }
     
     fileprivate func setupFetchedResultsController() {
-        let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
+        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
         let predicate = NSPredicate(format: "pin == %@", pin)
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchRequest.predicate = predicate
-        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        print("fetch pin info", pin.longitude)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "\(pin.creationDate!)-photos")
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "\(String(describing: pin))-photos")
         fetchedResultsController.delegate = self
         
         do {
