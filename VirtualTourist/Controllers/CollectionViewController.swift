@@ -16,7 +16,7 @@ private let reuseIdentifier = "customCell"
 
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MKMapViewDelegate {
     
-
+    
     var pin : Pin!
     var dataController: DataController!
     var fetchedResultsController:NSFetchedResultsController<Photo>!
@@ -36,7 +36,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collection.dataSource = self
         collection.delegate = self
         setupFetchedResultsController()
-
+        
         let annotation = MKPointAnnotation()
         
         annotation.coordinate = CLLocationCoordinate2D(latitude:pin.latitude, longitude: pin.longitude)
@@ -54,9 +54,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         page = 1
         setupFetchedResultsController()
-
+        
         if (fetchedResultsController.sections?[0].numberOfObjects ?? 0 == 0) {
-        loadImages(lon, lat, page)
+            loadImages(lon, lat, page)
         }
         collection.reloadData()
     }
@@ -79,9 +79,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             guard let imageUrl = URL(string: url) else{
                 return cell
             }
-        
-        
-        cell.imageView.kf.setImage(with: imageUrl, placeholder: image, options: nil, progressBlock: nil) { (imge, error, cacheType, url) in
+            
+            
+            cell.imageView.kf.setImage(with: imageUrl, placeholder: image, options: nil, progressBlock: nil) { (imge, error, cacheType, url) in
                 if ((error) != nil) {
                     
                 } else {
@@ -112,7 +112,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         page = page+1
         
         loadImages(pin!.longitude, pin!.latitude, page)
-         collection.reloadData()
+        collection.reloadData()
     }
     
     @IBAction func deleteImagesTapped(_ sender: UIButton) {
@@ -134,24 +134,23 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         { images, error in
             
             
-            if error == nil
-            {
-                DispatchQueue.main.async {
-                    
-                    for image in images
-                    {
-                        let photo = Photo(context: self.dataController.viewContext)
-                        photo.creationDate = Date()
-                        photo.url = image
-                        photo.pin = self.pin
-                        try? self.dataController.viewContext.save()
-                    }
-                    self.collection.reloadData()
-                    
-                }
-              
+            guard error == nil else {
+                self.showAlert(title: "Error", message: error!)
+                return
             }
-            
+            DispatchQueue.main.async {
+                
+                for image in images
+                {
+                    let photo = Photo(context: self.dataController.viewContext)
+                    photo.creationDate = Date()
+                    photo.url = image
+                    photo.pin = self.pin
+                    try? self.dataController.viewContext.save()
+                }
+                self.collection.reloadData()
+                
+            }
         }
     }
     
@@ -162,7 +161,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "\(pin)-photos")
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "\(String(describing: pin))-photos")
         fetchedResultsController.delegate = self
         
         do {
@@ -173,10 +172,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-    
-    // center the mapView on the selected pin
-    let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
-    mapView.setRegion(region, animated: true)
+        
+        // center the mapView on the selected pin
+        let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
+        mapView.setRegion(region, animated: true)
     }
     
 }
